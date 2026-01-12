@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-red: #ff2e2e;
+  --brand-red-glow: rgba(255, 46, 46, 0.6);
+  --bg-dark: #050505;
+  --panel-bg: rgba(10, 10, 10, 0.85);
+  --neon-cyan: #00f3ff;
+}
+
+/* --- Global Reset & Cursor Hiding --- */
+html, body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  padding-top: 110px;
+  cursor: none !important; /* Hides default mouse */
+  overflow-x: hidden; /* Prevents scrollbar flash */
+}
+
+a, button {
+  cursor: none !important;
+}
+
+/* ------------------------------------------- */
+/* CYBER HUD CURSOR (Base Styles)              */
+/* ------------------------------------------- */
+
+/* 1. Main Central Dot */
+.custom-cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--brand-red);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none; 
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px var(--brand-red);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+/* 2. Rotating Brackets (The HUD Ring) */
+.custom-cursor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-top-color: var(--brand-red);
+  border-bottom-color: var(--brand-red);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotateHUD 4s linear infinite;
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+}
+
+/* 3. Pulsing Outer Echo */
+.custom-cursor::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border: 1px dashed var(--brand-red);
+  opacity: 0.3;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulseHUD 2s infinite ease-in-out;
+  transition: all 0.2s;
+}
+
+/* 4. Text Label Next to Cursor */
+.cursor-label {
+  position: absolute;
+  font-size: 9px;
+  color: var(--brand-red);
+  top: -20px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  text-shadow: 0 0 5px var(--brand-red);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+/* 5. The Trace/Trail Dots */
+.cursor-trail {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-red);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0.4;
+  filter: blur(1px);
+  transition: opacity 0.1s;
+}
+
+/* ------------------------------------------- */
+/* MOVEMENT EFFECTS (The Shadow & Glow)        */
+/* ------------------------------------------- */
+
+/* 1. Main Dot: Scale up + Deep layered shadow/trail */
+.custom-cursor.is-moving {
+  transform: translate(-50%, -50%) scale(1.1);
+  /* Layer 1: Tight intense glow */
+  /* Layer 2: Wide soft shadow (The "Ghost" effect) */
+  box-shadow: 
+    0 0 15px var(--brand-red),
+    0 0 40px rgba(255, 46, 46, 0.8);
+}
+
+/* 2. The Ring: Spins fast, turns white, and gets its own shadow */
+.custom-cursor.is-moving::before {
+  width: 50px;
+  height: 50px;
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); 
+  animation: rotateHUD 0.8s linear infinite; /* Fast Spin */
+}
+
+/* 3. The Outer Echo: Shrinks and glows cyan */
+.custom-cursor.is-moving::after {
+  animation: none;
+  width: 25px;
+  height: 25px;
+  border-color: var(--neon-cyan);
+  opacity: 0.9;
+  border-style: solid;
+  box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+/* 4. Label: Fade out slightly */
+.custom-cursor.is-moving .cursor-label {
+  opacity: 0.6;
+  text-shadow: 0 0 10px var(--brand-red);
+}
+
+/* ------------------------------------------- */
+/* ANIMATIONS                                  */
+/* ------------------------------------------- */
+
+@keyframes rotateHUD {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulseHUD {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.5; }
+}
+
+/* ------------------------------------------- */
+/* HEADER & NAVIGATION                         */
+/* ------------------------------------------- */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--panel-bg);
+  backdrop-filter: blur(25px) saturate(150%);
+  -webkit-backdrop-filter: blur(25px) saturate(150%);
+  border-bottom: 2px solid var(--brand-red);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 46, 46, 0.1);
+}
+
+/* CRT Scanline Overlay */
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.1) 50%
+  ), linear-gradient(
+    90deg, 
+    rgba(255, 0, 0, 0.02), 
+    rgba(0, 255, 0, 0.01), 
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+  z-index: 1001;
+  opacity: 0.3;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: 90px;
+  padding: 0 80px; 
+  max-width: 1800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Corner HUD Detail */
+.header-inner::before {
+  content: "SYS_STATUS: “CODE. DEBUG. LEARN. REPEAT. BUILD.";
+  position: absolute;
+  bottom: 8px;
+  right: 80px;
+  font-size: 8px;
+  color: var(--brand-red);
+  opacity: 0.4;
+  letter-spacing: 2px;
+}
+
+.fixed-side {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 30px;
+  position: relative;
+}
+
+.fixed-side::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  height: 40px;
+  width: 2px;
+  background: var(--brand-red);
+  transform: skewX(-20deg);
+  box-shadow: 0 0 10px var(--brand-red);
+}
+
+.brand {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.brand span {
+  color: var(--brand-red);
+  text-shadow: 0 0 8px var(--brand-red-glow);
+}
+
+.avatar-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.avatar-glow {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--brand-red);
+  overflow: hidden;
+  padding: 2px;
+  background: #000;
+  box-shadow: 0 0 15px var(--brand-red-glow);
+  transform: rotate(-3deg);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.status-dot1 {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  background: #00ff41;
+  border-radius: 50%;
+  border: 2px solid #050505;
+  box-shadow: 0 0 8px #00ff41;
+  z-index: 10;
+  animation: pulse-status 2s infinite;
+}
+
+@keyframes pulse-status {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Navigation & Glitch ---------- */
+
+.nav-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  min-width: 0;
+}
+
+.nav-container {
+  flex: 1;
+  overflow: hidden;
+  margin: 0 40px; 
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.nav-list {
+  display: flex;
+  gap: 65px;
+  overflow-x: auto;
+  padding: 20px 60px;
+  scrollbar-width: none;
+}
+
+.nav-link {
+  color: #555;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  animation: glitch-text 0.3s steps(2) infinite;
+  text-shadow: 2px 0 var(--brand-red), -2px 0 var(--neon-cyan);
+}
+
+@keyframes glitch-text {
+  0% { transform: translate(0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+.nav-link.active {
+  color: var(--brand-red);
+  text-shadow: 0 0 12px var(--brand-red-glow);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: -5px;
+  right: -5px;
+  height: 3px;
+  background: var(--brand-red);
+  box-shadow: 0 0 20px var(--brand-red), 0 0 5px #fff;
+  border-radius: 10px;
+}
+
+.nav-arrow {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 46, 46, 0.3);
+  color: var(--brand-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: all 0.3s;
+  clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+  flex-shrink: 0;
+}
+
+.nav-arrow:hover:not(.disabled) {
+  background: var(--brand-red);
+  color: #fff;
+  box-shadow: 0 0 25px var(--brand-red-glow);
+}
+
+.nav-arrow.disabled {
+  opacity: 0.05;
+}

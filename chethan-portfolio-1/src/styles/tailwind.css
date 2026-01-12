@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles can be added below this line */
+
+body {
+  @apply bg-gray-900 text-white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-[#ff0000];
+}
+
+a {
+  @apply text-[#ff0000] hover:text-[#ff4d4d];
+}
+
+.navbar {
+  @apply bg-gray-800 shadow-lg;
+}
+
+.hero {
+  @apply flex items-center justify-center h-screen bg-cover bg-center;
+}
+
+.stats {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-4 px-10 py-10;
+}
+
+.project-card {
+  @apply border border-gray-800 p-6 bg-[#111111] transition-transform transform hover:scale-105;
+}
+
+.footer {
+  @apply py-20 text-center border-t border-gray-900;
+}

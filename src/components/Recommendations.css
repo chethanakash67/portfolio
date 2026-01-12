@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@500;700&display=swap');
+
+:root {
+  --neon-red: #ff003c;
+  --bg-black: #050505;
+}
+
+.recommendations-section {
+  background-color: var(--bg-black);
+  padding: 100px 20px;
+  overflow: hidden;
+  min-height: 60vh;
+  position: relative;
+}
+
+/* Moving Title */
+.rec-header-track {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.rec-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  transform: translateX(-50vw); /* Start off-screen left */
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rec-header-track.centered .rec-title {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Card Wrapper */
+.rec-container {
+  display: flex;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.rec-card-wrapper {
+  position: relative;
+  padding: 3px; /* Space for the gradient border */
+  background: linear-gradient(90deg, #222, var(--neon-red), #222);
+  background-size: 200% 200%;
+  border-radius: 4px;
+  opacity: 0;
+  transform: rotateX(20deg) scale(0.9);
+  transition: 0.8s ease-out 0.4s;
+  box-shadow: 0 0 0 rgba(255, 0, 60, 0);
+}
+
+.rec-card-wrapper.fade-in {
+  opacity: 1;
+  transform: rotateX(0deg) scale(1);
+  animation: border-flow 3s ease infinite;
+  box-shadow: 0 0 30px rgba(255, 0, 60, 0.2);
+}
+
+@keyframes border-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Inner Card */
+.rec-card {
+  background: #0a0a0a;
+  padding: 60px 40px;
+  text-align: center;
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.rec-bg-glow {
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,0,60,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.rec-main-icon {
+  font-size: 4rem;
+  color: var(--neon-red);
+  margin-bottom: 25px;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.5));
+}
+
+.rec-card-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.rec-desc {
+  font-family: 'Fira Code', monospace;
+  color: #888;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* Button */
+.rec-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 0, 60, 0.1);
+  border: 1px solid var(--neon-red);
+  color: #fff;
+  padding: 12px 35px;
+  font-family: 'Orbitron', sans-serif;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.3s;
+  letter-spacing: 1px;
+}
+
+.rec-btn:hover {
+  background: var(--neon-red);
+  color: #000;
+  box-shadow: 0 0 25px var(--neon-red);
+}
+
+.rec-quote-decor {
+  position: absolute;
+  bottom: 20px; right: 20px;
+  font-size: 5rem;
+  color: rgba(255, 255, 255, 0.02);
+}
