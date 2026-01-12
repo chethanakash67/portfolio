@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -12,15 +12,20 @@ import ContentRecord from "./components/ContentRecord";
 import Recommendations from "./components/Recommendations";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import EntryScreen from "./components/EntryScreen"; // Add this import
 import "./App.css";
-
+//EntryScreen
 function App() {
+  const [showPortfolio, setShowPortfolio] = useState(false);
+
+  if (!showPortfolio) {
+    return <EntryScreen onComplete={() => setShowPortfolio(true)} />;
+  }
+
   return (
     <div className="min-h-screen neon-bg text-white font-sans selection:bg-[#ff2d2d] selection:text-white">
-      
       <Navbar />
       
-      {/* Wrapped components in sections with IDs matching Navbar hrefs */}
       <section id="home">
         <Hero />
       </section>
@@ -61,7 +66,7 @@ function App() {
         <Contact />
       </section>
 
-      {/* Main tag for any extra spacing if needed, though sections handle it now */}
+
       <main className="max-w-[1100px] mx-auto px-6 py-12">
       </main>
       
