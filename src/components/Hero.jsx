@@ -41,7 +41,7 @@ export default function Hero() {
 
           <p className="hero-desc">
             I blend experience across coding, design, and product building. 
-            Currently building <strong>DropIQ</strong> and exploring Agentic AI & RAG.
+            Currently Technical lead at <strong>Airath</strong> and exploring Agentic AI & RAG.
           </p>
 
           <div className="hero-ctas">
