@@ -101,7 +101,7 @@ const Education = () => {
               <div className="gpa-container">
                   <div className="gpa-label">
                       <span>CGPA PERFORMANCE</span>
-                      <span className="gpa-value">8.98 <small>/ 10.0</small></span>
+                      <span className="gpa-value">9.07 <small>/ 10.0</small></span>
                   </div>
                   <div className="gpa-track">
                       {/* Width animates only when section is visible */}
