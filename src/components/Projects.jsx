@@ -58,6 +58,32 @@ const Projects = () => {
       stack: ["React Native", "Android", "iOS"],
       github: "https://github.com/Somesh520/Vakya-Sangham",
       image: vakyaImg
+    },
+    {
+      id: 6,
+      title: "ThinkFlow",
+      category: "Fullstack",
+      description: "AI powered coding platform. Includes some ML models for now.",
+      stack: ["Next.js", "PostgreSQL", "Node.js", "Express.js", "ML Models"],
+      github: "https://github.com/chethanakash67/ThinkFlow",
+      live: "https://think-and-code-in-a-flow.vercel.app/"
+    },
+    {
+      id: 7,
+      title: "CampusTask",
+      category: "Fullstack",
+      description: "A student task management system.",
+      stack: ["React.js", "PostgreSQL", "Node.js", "Express.js"],
+      github: "https://github.com/chethanakash67/Campus_Task",
+      live: "https://campustask.vercel.app/"
+    },
+    {
+      id: 8,
+      title: "GradeVision",
+      category: "ML",
+      description: "AI powered student performance predictor.",
+      stack: ["React.js", "MongoDB", "Node.js", "Express.js"],
+      github: "https://github.com/chethanakash67/GradeVision"
     }
   ];
 
@@ -111,6 +137,11 @@ const Projects = () => {
                   <a href={project.github} target="_blank" rel="noopener noreferrer" className="action-btn">
                     SOURCE_CODE <SiGithub />
                   </a>
+                  {project.live && (
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="action-btn">
+                      LIVE <FaExternalLinkAlt />
+                    </a>
+                  )}
                 </div>
               </div>
 

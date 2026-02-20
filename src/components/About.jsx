@@ -109,7 +109,7 @@ export default function About() {
           {/* RIGHT COLUMN */}
           <div className="about-right">
             <StatBox number={10} suffix="+" label="PROJECTS COMPLETED" isVisible={isVisible} />
-            <StatBox number={8.9} label="CGPA" isVisible={isVisible} />
+            <StatBox number={9.07} label="CGPA" isVisible={isVisible} />
             <StatBox number={5} suffix="+" label="CERTIFICATIONS" isVisible={isVisible} />
             <StatBox number={3} suffix="+" label="YEARS CODING" isVisible={isVisible} />
             <StatBox number={100} suffix="+" label="GITHUB COMMITS" isVisible={isVisible} />
